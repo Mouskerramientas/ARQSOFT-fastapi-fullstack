@@ -1,7 +1,7 @@
 import uuid
 
 from pydantic import EmailStr
-from sqlmodel import Field, Relationship, SQLModel
+from sqlmodel import Enum, Field, Relationship, SQLModel
 
 
 # Shared properties
@@ -112,3 +112,27 @@ class TokenPayload(SQLModel):
 class NewPassword(SQLModel):
     token: str
     new_password: str = Field(min_length=8, max_length=40)
+
+class EstadoServicio(str, Enum):
+     activo = "Activo"
+     inactivo = "Inactivo"
+ 
+class Servicio(SQLModel, table=True):
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    nombre: str
+    descripcion: str
+    user_id: uuid.UUID = Field(foreign_key="user.id")
+    estado: str = "activo"
+
+class Servidor(SQLModel, table=True):
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    nombre: str
+    user_id: uuid.UUID = Field(foreign_key="user.id")
+
+class Failure(SQLModel, table=True):
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    nombre: str
+    descripcion: str
+    user_id: uuid.UUID = Field(foreign_key="user.id")
+    servicio_id: uuid.UUID = Field(foreign_key="servicio.id")
+    servidor_id: uuid.UUID = Field(foreign_key="servidor.id")
