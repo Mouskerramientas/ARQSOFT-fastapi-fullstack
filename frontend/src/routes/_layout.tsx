@@ -1,18 +1,24 @@
-import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router";
+import { useAuthContext } from "../context/authContext";
+import { useEffect } from "react";
 
 export const Route = createFileRoute("/_layout")({
   component: RouteComponent,
-  beforeLoad: async () => {
-    // if (!isLoggedIn()) {
-    if (true) {
-      throw redirect({
-        to: "/login",
-      });
-    }
-  },
 });
 
 function RouteComponent() {
+  const context = useAuthContext();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (context) {
+      if (!context.validateLogin()) {
+        navigate({ to: "/login" });
+      }
+    }
+  }, []);
+
   return (
     <div>
       Hello "/__layout"!
