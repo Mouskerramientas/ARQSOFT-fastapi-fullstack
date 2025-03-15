@@ -19,6 +19,7 @@ export const useAuth = () => {
     username: "",
     is_admin: false,
   });
+  const [isValid, setIsValid] = useState<boolean>(false);
 
   const login = async (username: string, password: string) => {
     console.log(`Logging user ${username} with password ${password}`);
@@ -45,6 +46,7 @@ export const useAuth = () => {
         username: validToken.full_name,
         is_admin: validToken.is_superuser,
       });
+      setIsValid(true);
     }
   };
 
@@ -52,11 +54,13 @@ export const useAuth = () => {
     setSessionToken("");
     localStorage.removeItem("sessionToken");
     setUserInfo({ username: "", is_admin: false });
+    setIsValid(false);
   };
 
   return {
     userToken: sessionToken,
     userInfo: userInfo,
+    isValid: isValid,
     login,
     testToken,
     logOut,

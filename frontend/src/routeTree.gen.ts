@@ -16,7 +16,11 @@ import { Route as LoginImport } from './routes/login'
 import { Route as DashboardImport } from './routes/dashboard'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
+import { Route as DashboardIndexImport } from './routes/dashboard/index'
 import { Route as DashboardServicesImport } from './routes/dashboard/services'
+import { Route as DashboardServersImport } from './routes/dashboard/servers'
+import { Route as DashboardProfileImport } from './routes/dashboard/profile'
+import { Route as DashboardFailuresImport } from './routes/dashboard/failures'
 
 // Create/Update Routes
 
@@ -50,9 +54,33 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const DashboardIndexRoute = DashboardIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+
 const DashboardServicesRoute = DashboardServicesImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => DashboardRoute,
+} as any)
+
+const DashboardServersRoute = DashboardServersImport.update({
+  id: '/servers',
+  path: '/servers',
+  getParentRoute: () => DashboardRoute,
+} as any)
+
+const DashboardProfileRoute = DashboardProfileImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => DashboardRoute,
+} as any)
+
+const DashboardFailuresRoute = DashboardFailuresImport.update({
+  id: '/failures',
+  path: '/failures',
   getParentRoute: () => DashboardRoute,
 } as any)
 
@@ -95,11 +123,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterImport
       parentRoute: typeof rootRoute
     }
+    '/dashboard/failures': {
+      id: '/dashboard/failures'
+      path: '/failures'
+      fullPath: '/dashboard/failures'
+      preLoaderRoute: typeof DashboardFailuresImport
+      parentRoute: typeof DashboardImport
+    }
+    '/dashboard/profile': {
+      id: '/dashboard/profile'
+      path: '/profile'
+      fullPath: '/dashboard/profile'
+      preLoaderRoute: typeof DashboardProfileImport
+      parentRoute: typeof DashboardImport
+    }
+    '/dashboard/servers': {
+      id: '/dashboard/servers'
+      path: '/servers'
+      fullPath: '/dashboard/servers'
+      preLoaderRoute: typeof DashboardServersImport
+      parentRoute: typeof DashboardImport
+    }
     '/dashboard/services': {
       id: '/dashboard/services'
       path: '/services'
       fullPath: '/dashboard/services'
       preLoaderRoute: typeof DashboardServicesImport
+      parentRoute: typeof DashboardImport
+    }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardIndexImport
       parentRoute: typeof DashboardImport
     }
   }
@@ -108,11 +164,19 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface DashboardRouteChildren {
+  DashboardFailuresRoute: typeof DashboardFailuresRoute
+  DashboardProfileRoute: typeof DashboardProfileRoute
+  DashboardServersRoute: typeof DashboardServersRoute
   DashboardServicesRoute: typeof DashboardServicesRoute
+  DashboardIndexRoute: typeof DashboardIndexRoute
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardFailuresRoute: DashboardFailuresRoute,
+  DashboardProfileRoute: DashboardProfileRoute,
+  DashboardServersRoute: DashboardServersRoute,
   DashboardServicesRoute: DashboardServicesRoute,
+  DashboardIndexRoute: DashboardIndexRoute,
 }
 
 const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
@@ -125,16 +189,23 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRouteWithChildren
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/dashboard/failures': typeof DashboardFailuresRoute
+  '/dashboard/profile': typeof DashboardProfileRoute
+  '/dashboard/servers': typeof DashboardServersRoute
   '/dashboard/services': typeof DashboardServicesRoute
+  '/dashboard/': typeof DashboardIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/dashboard': typeof DashboardRouteWithChildren
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/dashboard/failures': typeof DashboardFailuresRoute
+  '/dashboard/profile': typeof DashboardProfileRoute
+  '/dashboard/servers': typeof DashboardServersRoute
   '/dashboard/services': typeof DashboardServicesRoute
+  '/dashboard': typeof DashboardIndexRoute
 }
 
 export interface FileRoutesById {
@@ -144,7 +215,11 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRouteWithChildren
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/dashboard/failures': typeof DashboardFailuresRoute
+  '/dashboard/profile': typeof DashboardProfileRoute
+  '/dashboard/servers': typeof DashboardServersRoute
   '/dashboard/services': typeof DashboardServicesRoute
+  '/dashboard/': typeof DashboardIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -155,15 +230,22 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/login'
     | '/register'
+    | '/dashboard/failures'
+    | '/dashboard/profile'
+    | '/dashboard/servers'
     | '/dashboard/services'
+    | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
-    | '/dashboard'
     | '/login'
     | '/register'
+    | '/dashboard/failures'
+    | '/dashboard/profile'
+    | '/dashboard/servers'
     | '/dashboard/services'
+    | '/dashboard'
   id:
     | '__root__'
     | '/'
@@ -171,7 +253,11 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/login'
     | '/register'
+    | '/dashboard/failures'
+    | '/dashboard/profile'
+    | '/dashboard/servers'
     | '/dashboard/services'
+    | '/dashboard/'
   fileRoutesById: FileRoutesById
 }
 
@@ -217,7 +303,11 @@ export const routeTree = rootRoute
     "/dashboard": {
       "filePath": "dashboard.tsx",
       "children": [
-        "/dashboard/services"
+        "/dashboard/failures",
+        "/dashboard/profile",
+        "/dashboard/servers",
+        "/dashboard/services",
+        "/dashboard/"
       ]
     },
     "/login": {
@@ -226,8 +316,24 @@ export const routeTree = rootRoute
     "/register": {
       "filePath": "register.tsx"
     },
+    "/dashboard/failures": {
+      "filePath": "dashboard/failures.tsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/profile": {
+      "filePath": "dashboard/profile.tsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/servers": {
+      "filePath": "dashboard/servers.tsx",
+      "parent": "/dashboard"
+    },
     "/dashboard/services": {
       "filePath": "dashboard/services.tsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/": {
+      "filePath": "dashboard/index.tsx",
       "parent": "/dashboard"
     }
   }

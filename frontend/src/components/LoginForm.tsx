@@ -1,7 +1,7 @@
 import { z } from "zod";
 import Button from "./Button";
 import Input from "./Input";
-import Tittle from "./Tittle";
+import Title from "./Title";
 import { useState } from "react";
 import { useAuthContext } from "../context/authContext";
 import { useNavigate } from "@tanstack/react-router";
@@ -45,7 +45,7 @@ const LoginForm = () => {
         await formAction(new FormData(e.target as HTMLFormElement));
       }}
     >
-      <Tittle label="Inicio de Sesión" />
+      <Title label="Inicio de Sesión" />
       <Input name="username" placeholder="Usuario" type="email" />
       <Input name="password" placeholder="Contraseña" type="password" />
       {error && (

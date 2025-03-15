@@ -1,10 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import Button from "./Button";
 import SecondaryButton from "./SecondaryButton";
-import Tittle from "./Tittle";
+import Title from "./Title";
 import { useAuthContext } from "../context/authContext";
 import { useEffect } from "react";
-import { FaUser } from "react-icons/fa";
+import { FaUserAstronaut } from "react-icons/fa";
 
 const Header = () => {
   const authContext = useAuthContext();
@@ -24,24 +24,24 @@ const Header = () => {
   return (
     <div className="w-full py-2 px-4 flex flex-row items-center justify-between">
       <Link className="flex items-center justify-center" to="/">
-        <Tittle label="Servicio de Alerta de Fallas en Servidores"></Tittle>
+        <Title label="Servicio de Alerta de Fallas en Servidores"></Title>
       </Link>
       <div className="flex flex-row gap-4">
-        {!authContext?.userInfo.username && (
+        {!authContext?.isValid && (
           <>
             <Link className="flex items-center justify-center" to="/register">
-              <SecondaryButton label="Registrarse" onClick={() => {}} />
+              <SecondaryButton onClick={() => {}}>Registrarse</SecondaryButton>
             </Link>
             <Link className="flex items-center justify-center" to="/login">
               <Button onClick={() => {}}>Iniciar Sesión</Button>
             </Link>
           </>
         )}
-        {authContext?.userInfo.username && (
+        {authContext?.isValid && (
           <>
-            <SecondaryButton label="Cerrar Sesión" onClick={logOut} />
+            <SecondaryButton onClick={logOut}>Cerrar Sesión</SecondaryButton>
             <Button onClick={() => {}}>
-              <FaUser />
+              <FaUserAstronaut />
               {authContext.userInfo.username}
             </Button>
           </>

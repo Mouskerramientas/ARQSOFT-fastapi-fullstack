@@ -6,11 +6,11 @@ import { useAuthT } from "../types/auth";
 const AuthContext = createContext<useAuthT | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const { userToken, userInfo, login, testToken, logOut } = useAuth();
+  const { userToken, userInfo, login, testToken, logOut, isValid } = useAuth();
 
   return (
     <AuthContext.Provider
-      value={{ userToken, userInfo, login, testToken, logOut }}
+      value={{ userToken, userInfo, login, testToken, logOut, isValid }}
     >
       {children}
     </AuthContext.Provider>

@@ -6,6 +6,7 @@ export type userInfoT = {
 export type useAuthT = {
   userToken: string;
   userInfo: userInfoT;
+  isValid: boolean;
   login: (username: string, password: string) => Promise<boolean>;
   testToken: () => void;
   logOut: () => void;

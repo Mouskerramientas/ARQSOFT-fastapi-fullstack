@@ -1,7 +1,7 @@
 import { z } from "zod";
 import Button from "./Button";
 import Input from "./Input";
-import Tittle from "./Tittle";
+import Title from "./Title";
 import { useState } from "react";
 import { useAuthContext } from "../context/authContext";
 import { useNavigate } from "@tanstack/react-router";
@@ -73,7 +73,7 @@ const RegisterForm = () => {
         await formAction(new FormData(e.target as HTMLFormElement));
       }}
     >
-      <Tittle label="Registro" />
+      <Title label="Registro" />
       <Input name="name" placeholder="Nombre" type="text" />
       <Input name="email" placeholder="Usuario" type="email" />
       <Input name="password" placeholder="Contraseña" type="password" />

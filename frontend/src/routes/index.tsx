@@ -1,12 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import Button from "../components/Button";
 import Footer from "../components/Footer";
+import { useAuthContext } from "../context/authContext";
 
 export const Route = createFileRoute("/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const authContext = useAuthContext();
+
   return (
     <div className="max-w-[80%] md:max-w-[60%] md:mt-24 flex flex-col items-center gap-4">
       <div className="flex flex-row gap-8">
@@ -18,9 +21,15 @@ function RouteComponent() {
             <br />
             Minimiza el Tiempo de Inactividad y Maximiza la Disponibilidad
           </h1>
-          <Link to="/register">
-            <Button label="Prueba Ahora" />
-          </Link>
+          {authContext?.userInfo.username ? (
+            <Link to="/dashboard">
+              <Button onClick={() => {}}>Ir al Dashboard</Button>
+            </Link>
+          ) : (
+            <Link to="/login">
+              <Button onClick={() => {}}>Prueba Ahora</Button>
+            </Link>
+          )}
         </div>
         <div className="hidden md:flex md:flex-1 w-64">
           <img className="w-64 h-64" src="/navegador.png" alt="Server" />
