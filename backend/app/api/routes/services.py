@@ -31,7 +31,7 @@ def read_servicios(user: CurrentUser,  session: SessionDep) -> list[Servicio]:
 
 #! Un cliente solo puede leer un servicio si su id corresponde con el del dueño del servicio
 @router.get("/{servicio_id}")
-def read_servicio(servicio_id: int, user: CurrentUser, session: SessionDep) -> Servicio:
+def read_servicio(servicio_id: str, user: CurrentUser, session: SessionDep) -> Servicio:
     servicio = session.get(Servicio, servicio_id)
     if not servicio:
         raise HTTPException(status_code=404, detail="Servicio not found")
@@ -44,7 +44,7 @@ def read_servicio(servicio_id: int, user: CurrentUser, session: SessionDep) -> S
 
 #! Un cliente solo puede actualizar un servicio si su id corresponde con el del dueño del servicio
 @router.put("/{servicio_id}")
-def update_servicio(servicio_id: int, user: CurrentUser, servicio: Servicio, session: SessionDep) -> Servicio:
+def update_servicio(servicio_id: str, user: CurrentUser, servicio: Servicio, session: SessionDep) -> Servicio:
     db_servicio = session.get(Servicio, servicio_id)
     if not db_servicio:
         raise HTTPException(status_code=404, detail="Servicio not found")
@@ -62,7 +62,7 @@ def update_servicio(servicio_id: int, user: CurrentUser, servicio: Servicio, ses
 
 #! Un cliente no puede eliminar un servicio
 @router.delete("/{servicio_id}")
-def delete_servicio(servicio_id: int, _: IsSuperUser, session: SessionDep):
+def delete_servicio(servicio_id: str, _: IsSuperUser, session: SessionDep):
     servicio = session.get(Servicio, servicio_id)
     if not servicio:
         raise HTTPException(status_code=404, detail="Servicio not found")

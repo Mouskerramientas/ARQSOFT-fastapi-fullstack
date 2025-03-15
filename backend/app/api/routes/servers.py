@@ -31,7 +31,7 @@ def read_servidores(user: CurrentUser  ,session: SessionDep) -> list[Servidor]:
 
 #! Un cliente solo puede leer un servidor si su id corresponde con el del dueño del servidor
 @router.get("/{servidor_id}")
-def read_servidor(servidor_id: int, user: CurrentUser, session: SessionDep) -> Servidor:
+def read_servidor(servidor_id: str, user: CurrentUser, session: SessionDep) -> Servidor:
     servidor = session.get(Servidor, servidor_id)
     
     if not servidor:
@@ -46,7 +46,7 @@ def read_servidor(servidor_id: int, user: CurrentUser, session: SessionDep) -> S
 
 #! Un cliente solo puede actualizar un servidor si su id corresponde con el del dueño del servidor
 @router.put("/{servidor_id}")
-def update_servidor(servidor_id: int, user:CurrentUser, servidor: Servidor, session: SessionDep) -> Servidor: 
+def update_servidor(servidor_id: str, user:CurrentUser, servidor: Servidor, session: SessionDep) -> Servidor: 
     db_servidor = session.get(Servidor, servidor_id)
     if not db_servidor:
         raise HTTPException(status_code=404, detail="Servidor not found")
@@ -63,7 +63,7 @@ def update_servidor(servidor_id: int, user:CurrentUser, servidor: Servidor, sess
 
 #! Un cliente no puede eliminar un servidor
 @router.delete("/{servidor_id}")
-def delete_servidor(servidor_id: int, _:IsSuperUser, session: SessionDep):
+def delete_servidor(servidor_id: str, _:IsSuperUser, session: SessionDep):
     servidor = session.get(Servidor, servidor_id)
     if not servidor:
         raise HTTPException(status_code=404, detail="Servidor not found")

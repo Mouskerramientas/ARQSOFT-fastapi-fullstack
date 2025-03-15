@@ -28,7 +28,7 @@ def read_failures(user: CurrentUser, session: SessionDep) -> list[Failure]:
         return failures
 
 @router.get("/{failure_id}")
-def read_failure(failure_id: int, user:CurrentUser, session: SessionDep) -> Failure:
+def read_failure(failure_id: str, user:CurrentUser, session: SessionDep) -> Failure:
     failure = session.get(Failure, failure_id)
     if not failure:
         raise HTTPException(status_code=404, detail="Failure not found")
@@ -39,7 +39,7 @@ def read_failure(failure_id: int, user:CurrentUser, session: SessionDep) -> Fail
 
 #! El método PUT no está permitido
 # @router.put("/failures/{failure_id}")
-# def update_failure(failure_id: int, _:Annotated[dict, Depends(decode_token)], failure: Failure, session: SessionDep) -> Failure:
+# def update_failure(failure_id: str, _:Annotated[dict, Depends(decode_token)], failure: Failure, session: SessionDep) -> Failure:
 #     db_failure = session.get(Failure, failure_id)
 #     if not db_failure:
 #         raise HTTPException(status_code=404, detail="Failure not found")
@@ -52,7 +52,7 @@ def read_failure(failure_id: int, user:CurrentUser, session: SessionDep) -> Fail
 
 #! El método DELETE no está permitido
 # @router.delete("/failures/{failure_id}")
-# def delete_failure(failure_id: int, _:Annotated[dict, Depends(decode_token)], session: SessionDep):
+# def delete_failure(failure_id: str, _:Annotated[dict, Depends(decode_token)], session: SessionDep):
 #     failure = session.get(Failure, failure_id)
 #     if not failure:
 #         raise HTTPException(status_code=404, detail="Failure not found")
