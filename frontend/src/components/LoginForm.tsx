@@ -1,4 +1,4 @@
-import { set, z } from "zod";
+import { z } from "zod";
 import Button from "./Button";
 import Input from "./Input";
 import Tittle from "./Tittle";
@@ -25,19 +25,13 @@ const LoginForm = () => {
 
     const data = loginSchema.safeParse(formValues);
 
-    if (data.success) {
-      console.log(
-        `Validando ingreso de usuario ${data.data.username} - ${data.data.password}`
-      );
-      if (context) {
-        console.log("Contexto de usuario encontrado");
-        const res = await context.login(data.data.username, data.data.password);
-        if (res) {
-          setError("");
-          navigate({ to: "/dashboard" });
-        } else {
-          setError("Usuario o contraseña incorrectos");
-        }
+    if (data.success && context) {
+      const res = await context.login(data.data.username, data.data.password);
+      if (res) {
+        setError("");
+        navigate({ to: "/dashboard" });
+      } else {
+        setError("Usuario o contraseña incorrectos");
       }
     }
 

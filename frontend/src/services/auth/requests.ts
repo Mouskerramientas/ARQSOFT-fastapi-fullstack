@@ -60,3 +60,32 @@ export const testTokenRequest = async (
   }
   return response.json();
 };
+
+export const signupRequest = async (
+  full_name: string,
+  email: string,
+  password: string
+): Promise<{ success: boolean; message: string } | undefined> => {
+  const response = await fetch(`${API_URL}/api/v1/users/signup/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ full_name, email, password }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Signup failed");
+  }
+
+  if (response.status === 200) {
+    return {
+      success: true,
+      message: "Usuario creado",
+    };
+  }
+
+  if (response.status === 400) {
+    return { success: false, message: "Usuario ya existe" };
+  }
+};

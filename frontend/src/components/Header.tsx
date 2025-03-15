@@ -10,7 +10,7 @@ const Header = () => {
   const authContext = useAuthContext();
 
   useEffect(() => {
-    if (authContext) {
+    if (authContext?.userToken) {
       authContext.testToken();
     }
   }, []);
