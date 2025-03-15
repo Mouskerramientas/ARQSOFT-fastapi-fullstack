@@ -1,11 +1,12 @@
-export type userSessionT = {
-  token: string;
+export type userInfoT = {
   username: string;
+  is_admin: boolean;
 };
 
 export type useAuthT = {
   userToken: string;
-  username: string;
-  login: (username: string, password: string) => boolean;
-  validateLogin: () => boolean;
+  userInfo: userInfoT;
+  login: (username: string, password: string) => Promise<boolean>;
+  testToken: () => void;
+  logOut: () => void;
 };

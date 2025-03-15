@@ -1,50 +1,64 @@
 import { useState } from "react";
-import { userSessionT } from "../types/auth";
+import {
+  testTokenRequest,
+  validateLoginRequest,
+} from "../services/auth/requests";
+import { userInfoT } from "../types/auth";
 
 export const useAuth = () => {
-  const initialState = (): userSessionT => {
-    const userSession = localStorage.getItem("user-session") || "";
-    if (userSession) {
-      const { token, username } = JSON.parse(userSession);
-      return {
-        token,
-        username,
-      };
+  const initialState = () => {
+    const session = localStorage.getItem("sessionToken");
+    if (session) {
+      return session;
     }
-    return {
-      token: "",
-      username: "",
-    };
+    return "";
   };
 
-  const [userSession, setUserSession] = useState<userSessionT>(initialState);
+  const [sessionToken, setSessionToken] = useState<string>(initialState);
+  const [userInfo, setUserInfo] = useState<userInfoT>({
+    username: "",
+    is_admin: false,
+  });
 
-  const login = (username: string, password: string) => {
+  const login = async (username: string, password: string) => {
     console.log(`Logging user ${username} with password ${password}`);
-    // TODO: Validate login
-    // If login valid
-    setUserSession({
-      token: "1234",
-      username: "Daniv",
-    });
-    localStorage.setItem(
-      "user-session",
-      JSON.stringify({
-        token: "1234",
-        username: "Daniv",
-      })
-    );
+
+    const validLogin = await validateLoginRequest(username, password);
+
+    if (!validLogin) {
+      return false;
+    }
+
+    setSessionToken(validLogin.access_token);
+    localStorage.setItem("sessionToken", validLogin.access_token);
+
+    await testToken(validLogin.access_token);
+
     return true;
   };
 
-  const validateLogin = () => {
-    return false;
+  const testToken = async (token = sessionToken) => {
+    console.log(`Testing token ${token}`);
+    const validToken = await testTokenRequest(token);
+    if (validToken) {
+      setUserInfo({
+        username: validToken.full_name,
+        is_admin: validToken.is_superuser,
+      });
+    }
+  };
+
+  const logOut = () => {
+    setSessionToken("");
+    localStorage.removeItem("sessionToken");
+    setUserInfo({ username: "", is_admin: false });
   };
 
   return {
-    userToken: userSession.token,
-    username: userSession.username,
+    userToken: sessionToken,
+    userInfo: userInfo,
     login,
-    validateLogin,
+    testToken,
+    logOut,
   };
 };

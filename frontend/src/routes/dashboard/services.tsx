@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/_layout/")({
+export const Route = createFileRoute("/dashboard/services")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  return <div>Hello from inside"/__layout/"!</div>;
+  return <div>Services dentro de dashboard</div>;
 }

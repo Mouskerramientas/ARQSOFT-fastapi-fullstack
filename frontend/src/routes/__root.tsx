@@ -1,11 +1,12 @@
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { AuthProvider } from "../context/authContext";
+import Header from "../components/Header";
 
 export const Route = createRootRoute({
   component: () => {
     return (
-      <div className="w-full h-svh bg-radial from-blue-800 md:from-20% to-gray-800 to-90% dark:text-white flex justify-center items-center">
+      <div className="w-full h-svh bg-radial from-blue-400 to-neutral-200 dark:from-blue-800 dark:md:from-20% dark:to-gray-800 dark:to-90% dark:text-white flex flex-col items-center">
         {/* <div className="p-2 flex gap-2">
         <Link to="/" className="[&.active]:font-bold">
           Home
@@ -19,7 +20,12 @@ export const Route = createRootRoute({
         </AuthContext.Provider> */}
 
         <AuthProvider>
-          <Outlet />
+          <div className="w-full h-svh flex flex-col items-center overflow-y-auto">
+            <Header />
+            <div className="h-full flex justify-center">
+              <Outlet />
+            </div>
+          </div>
         </AuthProvider>
         <TanStackRouterDevtools />
       </div>
