@@ -1,9 +1,4 @@
-import {
-  createFileRoute,
-  Link,
-  Outlet,
-  useNavigate,
-} from "@tanstack/react-router";
+import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router";
 import { useAuthContext } from "../context/authContext";
 import { useEffect } from "react";
 import Spinner from "../components/Spinner";
@@ -35,7 +30,7 @@ function RouteComponent() {
   if (context?.isValid) {
     return (
       <div className="flex flex-row h-full w-screen">
-        <aside className="w-72 flex flex-col gap-4 p-4 m-2 mt-1 mr-1 rounded-xl md:bg-neutral-200/80 md:dark:bg-gray-900/40">
+        <aside className="w-72 flex flex-col gap-2 p-4 m-2 mt-1 mr-1 rounded-xl md:bg-neutral-200/80 md:dark:bg-gray-900/40">
           <DashboardLink to="/dashboard">
             <FaBookReader />
             Dashboard
@@ -56,7 +51,7 @@ function RouteComponent() {
             Perfil
           </DashboardLink>
           {context.userInfo.is_admin && (
-            <DashboardLink to="/dashboard/services">
+            <DashboardLink to="/dashboard/users">
               <FaUserCheck />
               Usuarios
             </DashboardLink>

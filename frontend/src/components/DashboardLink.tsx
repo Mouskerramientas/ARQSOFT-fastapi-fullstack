@@ -6,7 +6,8 @@ interface Props {
     | "/dashboard/services"
     | "/dashboard/servers"
     | "/dashboard/profile"
-    | "/dashboard/failures";
+    | "/dashboard/failures"
+    | "/dashboard/users";
   children: React.ReactNode;
 }
 

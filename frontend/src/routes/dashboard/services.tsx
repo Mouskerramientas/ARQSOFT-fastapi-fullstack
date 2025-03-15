@@ -1,9 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/dashboard/services")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  return <div>Services dentro de dashboard</div>;
+  return (
+    <div className="flex flex-col gap-4 items-center">
+      <Outlet />
+    </div>
+  );
 }

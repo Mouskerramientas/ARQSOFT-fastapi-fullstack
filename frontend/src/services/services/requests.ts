@@ -1,7 +1,7 @@
 import { API_URL } from "../../config";
 
-export const fetchUserServers = async (token: string) => {
-  const response = await fetch(`${API_URL}/api/v1/servers/`, {
+export const fetchUserServices = async (token: string) => {
+  const response = await fetch(`${API_URL}/api/v1/services/`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -13,8 +13,12 @@ export const fetchUserServers = async (token: string) => {
   return data;
 };
 
-export const createServer = async (token: string, name: string) => {
-  const response = await fetch(`${API_URL}/api/v1/servers/`, {
+export const createService = async (
+  token: string,
+  name: string,
+  description: string
+) => {
+  const response = await fetch(`${API_URL}/api/v1/services/`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -22,6 +26,7 @@ export const createServer = async (token: string, name: string) => {
     },
     body: JSON.stringify({
       nombre: name,
+      descripcion: description,
     }),
   });
 
@@ -33,8 +38,8 @@ export const createServer = async (token: string, name: string) => {
   return undefined;
 };
 
-export const getServerById = async (token: string, id: string) => {
-  const response = await fetch(`${API_URL}/api/v1/servers/${id}`, {
+export const getServiceById = async (token: string, id: string) => {
+  const response = await fetch(`${API_URL}/api/v1/services/${id}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -46,8 +51,14 @@ export const getServerById = async (token: string, id: string) => {
   return data;
 };
 
-export const updateServer = async (token: string, id: string, name: string) => {
-  const response = await fetch(`${API_URL}/api/v1/servers/${id}`, {
+export const updateService = async (
+  token: string,
+  id: string,
+  name: string,
+  description: string,
+  state: string
+) => {
+  const response = await fetch(`${API_URL}/api/v1/services/${id}`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -55,6 +66,8 @@ export const updateServer = async (token: string, id: string, name: string) => {
     },
     body: JSON.stringify({
       nombre: name,
+      descripcion: description,
+      estado: state,
     }),
   });
 
