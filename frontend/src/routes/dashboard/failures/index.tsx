@@ -1,8 +1,7 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useAuthContext } from "../../../context/authContext";
 import { useEffect, useState } from "react";
 import Title from "../../../components/Title";
-import Button from "../../../components/Button";
 import { failure } from "../../../types/failures";
 import { fetchUserFailures } from "../../../services/failures/requests";
 
@@ -15,8 +14,6 @@ function RouteComponent() {
 
   const [userFailures, setUserFailures] = useState<failure[]>([]);
   const [dataFetched, setDataFetched] = useState(false);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (authContext?.userToken) {

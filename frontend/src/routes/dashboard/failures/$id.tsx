@@ -20,8 +20,6 @@ function RouteComponent() {
 
   const [failure, setFailure] = useState<failure | null>(null);
 
-  const [loading, setLoading] = useState(false);
-
   const authContext = useAuthContext();
 
   const navigate = useNavigate();
@@ -66,7 +64,7 @@ function RouteComponent() {
             value={failure.descripcion}
             type="text"
           />
-          <Button onClick={() => {}} loading={loading} type="submit">
+          <Button onClick={() => {}} type="submit">
             Guardar
           </Button>
         </form>
